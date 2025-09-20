@@ -28,6 +28,7 @@ import Account from "./pages/shoppingView/Account";
 // Other Imports
 import Unauthorized from "./pages/unauthorized/Unauthorized";
 import NotFound from "./pages/notFound/NotFound";
+import ProductDetails from "./components/common/ProductDetails";
 
 function App() {
 
@@ -65,13 +66,14 @@ function App() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="orders" element={<Orders />} />
         <Route path="products" element={<Products />} />
+        <Route path="product/:productName/:productId" element={<ProductDetails />} />
       </Route>
 
       {/* Shopping Routes */}
       <Route path="/shop" element={
         <CheckAuth isAunthenticated={isAuthenticated} user={user}>
           <ShoppingLayout />  {/* ShoppingLayout is called children of CheckAuth Component */}
-        </CheckAuth>
+          </CheckAuth>
       }>
         <Route path="" element={<Home />} />
         <Route path="products" element={<ProductListing />} />
@@ -79,6 +81,7 @@ function App() {
         <Route path="cart" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="account" element={<Account />} />
+        <Route path="product/:productName/:productId" element={<ProductDetails />} />
       </Route>
 
       {/* Not Found & Unauthorized Routes */}

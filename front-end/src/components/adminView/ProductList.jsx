@@ -3,20 +3,20 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Image, ImageKitProvider } from "@imagekit/react";
+import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteProducts } from "../../../hooks/useInfiniteProducts"; // ✅ Import custom hook
-import ProductDetails from "../common/ProductDetails";
 
-const ProductList = ({ setOpen, productData, setProductData, setImageFile, setIsEditingMode }) => {
+const ProductList = ({ setOpen, setProductData, setImageFile, setIsEditingMode }) => {
 
   const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
   const imageKitUrl = import.meta.env.VITE_APP_IMAGE_KIT_URL_ENDPOINT;
-
+  const navigate = useNavigate();
+  
   const { ref, inView } = useInView();
 
   const [isDeleting, setIsDeleting] = useState(false);
-  const [showProductDetails, setShowProductDetails] = useState(false);
 
   const {
     data,
@@ -37,8 +37,7 @@ const ProductList = ({ setOpen, productData, setProductData, setImageFile, setIs
   }, [inView, hasNextPage, fetchNextPage]);
 
   const handleShowDetails = (product) => {
-    setShowProductDetails(true);
-    setProductData(product);
+    navigate(`../product/${encodeURIComponent(product.productName)}/${product._id}`, { state: { product } });
   };
 
   const handleUpdate = (product) => {
@@ -90,7 +89,7 @@ const ProductList = ({ setOpen, productData, setProductData, setImageFile, setIs
   if (isError) return <p className="text-center text-red-500">Error fetching products</p>;
 
   return (
-    <div className="relative mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div className="relative mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:max-h-[470px] overflow-y-auto">
       {data?.pages.flatMap((page) =>
         page.data.map((product) => {
           const discount = Math.round(
@@ -168,10 +167,6 @@ const ProductList = ({ setOpen, productData, setProductData, setImageFile, setIs
           <p className="text-gray-500">No more products to load</p>
         )}
       </div>
-
-      {showProductDetails && (
-        <ProductDetails productData={productData} setShowProductDetails={setShowProductDetails} />
-      )}
     </div>
   );
 };
