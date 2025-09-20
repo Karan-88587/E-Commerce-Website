@@ -175,7 +175,7 @@ const AddProduct = ({
 
                     <div>
                         <Label className='text-sm mb-1'>Product Name : <span className='text-red-600'>*</span></Label>
-                        <Input className='border border-gray-300 w-80' placeholder='Product Name' value={productData.productName}
+                        <Input className='border border-gray-300 w-80' placeholder='Product Name' value={isEditingMode ? productData.productName : ""}
                             onChange={(e) => {
                                 setProductData({ ...productData, productName: e.target.value });
                                 setError({ ...error, productName: "" });
@@ -187,7 +187,7 @@ const AddProduct = ({
                     <div className='mt-2'>
                         <Label className='text-sm mb-1'>Product Description : <span className='text-red-600'>*</span></Label>
                         <Textarea className='border border-gray-300 w-80' placeholder="Product Description"
-                            value={productData.productDescription} onChange={(e) => {
+                            value={isEditingMode ? productData.productDescription : ""} onChange={(e) => {
                                 setProductData({ ...productData, productDescription: e.target.value });
                                 setError({ ...error, productDescription: "" });
                             }}
@@ -197,7 +197,7 @@ const AddProduct = ({
 
                     <div className='mt-2'>
                         <Label className='text-sm mb-1'>Select Type : <span className='text-red-600'>*</span></Label>
-                        <Select value={productData.productType} onValueChange={(value) => {
+                        <Select value={isEditingMode ? productData.productType : ""} onValueChange={(value) => {
                             setProductData({ ...productData, productType: value });
                             setError({ ...error, productType: "" });  // ✅ Clear error properly
                         }}
@@ -218,7 +218,7 @@ const AddProduct = ({
 
                     <div className='mt-2'>
                         <Label className='text-sm mb-1'>Select Category : <span className='text-red-600'>*</span></Label>
-                        <Select value={productData.productCategory} onValueChange={(value) => {
+                        <Select value={isEditingMode ? productData.productCategory : ""} onValueChange={(value) => {
                             setProductData({ ...productData, productCategory: value });
                             setError({ ...error, productCategory: "" });  // ✅ Clear error properly
                         }}
@@ -241,7 +241,7 @@ const AddProduct = ({
                     <div className='mt-2'>
                         <Label className='text-sm mb-1'>Select Brand : <span className='text-red-600'>*</span></Label>
                         <Select
-                            value={productData.productBrand}
+                            value={isEditingMode ? productData.productBrand : ""}
                             onValueChange={(value) => {
                                 setProductData({ ...productData, productBrand: value });
                                 setError({ ...error, productBrand: "" });  // ✅ Clear error properly
@@ -294,7 +294,7 @@ const AddProduct = ({
                                 isMulti
                                 closeMenuOnSelect={false}
                                 options={kidsSizes?.map((size) => ({ value: size, label: size }))}
-                                value={productData?.kidsSizes?.map((size) => ({ value: size, label: size }))}
+                                value={isEditingMode ? productData?.kidsSizes?.map((size) => ({ value: size, label: size })) : []}
                                 onChange={(selected) =>
                                     setProductData({
                                         ...productData,
@@ -308,7 +308,7 @@ const AddProduct = ({
                                 isMulti
                                 closeMenuOnSelect={false}
                                 options={normalSizes?.map((size) => ({ value: size, label: size }))}
-                                value={productData?.normalSizes?.map((size) => ({ value: size, label: size }))}
+                                value={isEditingMode ? productData?.normalSizes?.map((size) => ({ value: size, label: size })) : []}
                                 onChange={(selected) =>
                                     setProductData({
                                         ...productData,
@@ -323,7 +323,7 @@ const AddProduct = ({
 
                     <div className='mt-2'>
                         <Label className='text-sm mb-1'>Enter Price : <span className='text-red-600'>*</span></Label>
-                        <Input type='number' className='border border-gray-300 w-80' placeholder='Enter Price' value={productData.productPrice}
+                        <Input type='number' className='border border-gray-300 w-80' placeholder='Enter Price' value={isEditingMode ? productData.productPrice : ""}
                             onChange={(e) => {
                                 setProductData({ ...productData, productPrice: e.target.value });
                                 setError({ ...error, productPrice: "" });
@@ -335,7 +335,7 @@ const AddProduct = ({
                     <div className='mt-2'>
                         <Label className='text-sm mb-1'>Sale Price :</Label>
                         <Input type='number' className='border border-gray-300 w-80' placeholder='Enter Sell Price'
-                            value={productData.productSalePrice}
+                            value={isEditingMode ? productData.productSalePrice : ""}
                             onChange={(e) => {
                                 setProductData({ ...productData, productSalePrice: e.target.value });
                                 setError({ ...error, productSalePrice: "" });
@@ -347,7 +347,7 @@ const AddProduct = ({
                     <div className='mt-2'>
                         <Label className='text-sm mb-1'>Total Stock : <span className='text-red-600'>*</span></Label>
                         <Input type='number' className='border border-gray-300 w-80' placeholder='Enter Available Stock'
-                            value={productData.productStock} onChange={(e) => {
+                            value={isEditingMode ? productData.productStock : ""} onChange={(e) => {
                                 setProductData({ ...productData, productStock: e.target.value });
                                 setError({ ...error, productStock: "" });
                             }}
@@ -370,7 +370,7 @@ const AddProduct = ({
                 </SheetFooter>
             </SheetContent>
         </Sheet>
-    )
+    );
 }
 
 export default AddProduct;
